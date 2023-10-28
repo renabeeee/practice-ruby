@@ -4,13 +4,10 @@ class Items
   # a.
   attr_writer :price
 
-  def initialize(color, price, size)
-    # Instance 1
-    @color = color
-    # Instance 2
-    @price = price
-    # Instance 3
-    @size = size
+def initialize(item_desc)
+    @color = item_desc[:color]
+    @price = item_desc[:price]
+    @size = item_desc[:size]
   end
 
 def print_info
@@ -18,7 +15,7 @@ def print_info
   end
 end
 
-customer1 = Items.new("Green", 60, "Medium")
+customer1 = Items.new({color:"Green", size:"Medium", price:60})
 
 # c. Uses the writer method to change value (price)
 customer1.price = (80)
