@@ -16,6 +16,7 @@ def print_info
 end
 
 customer1 = Items.new({color:"Green", size:"Medium", price:60})
+# this part actually doesn't need brackets or parentheses at all and will still work
 
 # c. Uses the writer method to change value (price)
 customer1.price = (80)
