@@ -5,6 +5,7 @@ class Employee
   @salary = input_salary
   @active = input_active
 end
+# This is an example of a class using an array
 
 def yearly_salary_increase
   @salary = 1.05 * @salary
