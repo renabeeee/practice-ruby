@@ -24,33 +24,34 @@
 
 
 
-############################################################################################
-# Employee Hash Class
+######################################################################
+# class EmployeeHash
+#
+#   attr_reader :first_name, :last_name, :active
+#   attr_writer :salary
 
-class EmployeeHash
-  attr_reader :first_name, :last_name, :active
-  attr_writer :salary
+#   # This is an example of a class using a hash
+#   def initialize(input_options)
+#     @first_name = input_options[:first_name]
+#     @last_name = input_options[:last_name]
+#     @salary = input_options[:salary]
+#     @active = input_options[:active]
+#   end
 
-  def initialize (input_options)
-    @first_name = input_options[:first_name]
-    @last_name = input_options[:last_name]
-    @salary = input_options[:salary]
-    @active = input_options[:active]
-  end
-  # This is an example of a class using a hash
+#   def yearly_salary_increase
+#     @salary = 1.05 * @salary
+#   end
 
-  def yearly_salary_increase
-    @salary = 1.05 * @salary
-  end
+#   def print_info
+#     yearly_salary_increase
+#     return "#{@first_name} #{@last_name} currently makes #{@salary} a year."
+#   end
+# end
 
-  def print_info
-    yearly_salary_increase
-    return "#{@first_name} #{@last_name} makes #{@salary} a year."
-  end
-end
+# employee1 = EmployeeHash.new(first_name: "Dwight", last_name: "Shrute", salary: 50000, active: true)
+# employee2 = EmployeeHash.new(first_name: "Jim", last_name: "Halpert", salary: 60000, active: true)
 
-employee1 = EmployeeHash.new(first_name: "Majora", last_name: "Carter", salary: 100000, active: true)
-puts employee1.print_info
+# puts employee1.print_info
 
 
 ############################################################################################
@@ -168,31 +169,67 @@ puts employee1.print_info
 
 ############################################################################################
 
-# It's a hash now! And I've decided to focus on Pam now as a manager. So now, I'll try the 'super' maintainable way of tacking on a new data point while still utilizing the data points in the Employee class. But first, I'll also need to make the Employee class (the parent class) use a hash as well because both the parent class and child need to be the same data format. For the sake of this exercise file, I'll be creating a new EmployeeHash class for this exercise to use (second piece of code up at the top.)
+# It's a hash now! And I've decided to focus on Pam now as a manager. So now, I'll try the 'super' maintainable way of tacking on a new data point while still utilizing the data points in the Employee class. But first, I'll also need to make the Employee class (the parent class) use a hash as well because currently it's an array. Both the parent class and child need to be the same data format. For the sake of this exercise file, I've created a new EmployeeHash class to use (second piece of code up at the top and inserted below for visibility).
+
+
+class EmployeeHash
+  attr_reader :first_name, :last_name, :active
+  attr_writer :salary
+
+  # This is an example of a class using a hash
+  def initialize(input_options)
+    @first_name = input_options[:first_name]
+    @last_name = input_options[:last_name]
+    @salary = input_options[:salary]
+    @active = input_options[:active]
+  end
+
+  def yearly_salary_increase
+    @salary = 1.05 * @salary
+  end
+
+  def print_info
+    yearly_salary_increase
+    return "#{@first_name} #{@last_name} currently makes #{@salary} a year."
+  end
+end
+
+employee1 = EmployeeHash.new(first_name: "Dwight", last_name: "Shrute", salary: 50000, active: true)
+employee2 = EmployeeHash.new(first_name: "Jim", last_name: "Halpert", salary: 60000, active: true)
+
 
 class Manager < EmployeeHash
   attr_reader :first_name, :last_name, :active, :employees
 
-  def initialize (input_options)
+  def initialize(input_options)
     super
-    #This is the new data point:
+      #This is the new data point:
     @employees = input_options[:employees]
   end
 
   def send_report
     puts "sending emails..."
-    # sending system
     puts "email sent!"
   end
 
   def print_info_Pam
     puts "#{@first_name} #{@last_name} works with #{@employees} employees in the Sales department."
   end
+
+  def give_annual_increase
+    @employees.each do |employee|
+      employee.yearly_salary_increase
+    end
+  end
 end
 
-manager = Manager.new(first_name: "Pam", last_name: "Halpert", salary: 41500, active: true, employees: 3)
-manager_alt = Manager.new(first_name: "Pam", last_name: "Halpert", salary: 41500, active: true, employees: [employee1]) # Objects listed from the parent class 'EmployeeHash' can be added by putting it in an array
+# Objects listed from the parent class 'EmployeeHash' can be added by putting it in an array
+manager = Manager.new(first_name: "Michael", last_name: "Scott", salary: 41500, active: true, employees: [employee1, employee2])
 
-manager.send_report
-manager.print_info_Pam
-manager_alt.print_info_Pam
+# Increases the salaries of the employees in array ^
+manager.give_annual_increase
+
+# Prints the updated information for the manager and employees
+puts manager.print_info_Pam
+puts employee1.print_info
+puts employee2.print_info
