@@ -33,9 +33,26 @@ puts customer1.price # "80" (not "60" because of the attr writer we added)
 puts customer1.size  # "Medium"
 # This will print 3 attributes for one object.
 
-puts "The cost of Customer 2's shirt is": customer2.price
-# This will print one attribute (:price) for another object; it also prints a string (this gets a little weird though and made me put a ":" after the string in order for it to work. I also tried adding another string statement after "customer2.price" and it wouldn't work.)
+puts "The cost of Customer 2's shirt is: #{customer2.price}"
+# This will print one attribute (:price) for another object.
 
 puts customer1.print_info
 puts customer2.print_info
 # This will print both objects according to the def print_info method
+
+
+# Exercise: Some of your store items are food, which have a shelf life. Create a class called Food which inherits from your original class and has an additional property of shelf_life.
+
+class Food < Items
+attr_reader :shelf_life
+
+  def initialize(item_desc)
+    super
+    @shelf_life = item_desc[:shelf_life]
+  end
+end
+
+food_item = Food.new({ color: "Red", size: "Small", price: 5, shelf_life: "2 weeks" })
+
+puts food_item.print_info  # Print the information for the food item
+puts "This food item has a shelf life of #{food_item.shelf_life}."
